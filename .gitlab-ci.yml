@@ -7,6 +7,7 @@ workflow:
 stages:
   - build
   - test
+  - security
 
 default:
   image: node:20-alpine
@@ -22,3 +23,29 @@ unit_tests:
   script:
     - cd app
     - npm test
+
+stages:
+  - build
+  - test
+  - security
+
+default:
+  image: node:20-alpine
+
+build_app:
+  stage: build
+  script:
+    - cd app
+    - npm ci
+
+unit_tests:
+  stage: test
+  script:
+    - cd app
+    - npm test
+
+sast_semgrep:
+  stage: security
+  image: returntocorp/semgrep
+  script:
+    - semgrep scan --config=auto --severity ERROR app
