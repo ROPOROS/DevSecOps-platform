@@ -35,7 +35,7 @@ secret_scan:
     - gitleaks detect --source . --verbose --report-path gitleaks-report.json
 
 sca_scan:
-  stage: test
+  stage: security
   image: aquasec/trivy:latest
   script:
     - trivy fs --scanners vuln --severity CRITICAL,HIGH --exit-code 1 .
