@@ -28,7 +28,9 @@ sast_semgrep:
 
 secret_scan:
   stage: security
-  image: zricethezav/gitleaks:latest
-  script:
-    - gitleaks detect . --verbose
+  image:
+    name: zricethezav/gitleaks
+    entrypoint: [""]
+  script: 
+    - gitleaks detect --source . --verbose --report-path gitleaks-report.json
 
