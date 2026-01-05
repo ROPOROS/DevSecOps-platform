@@ -26,3 +26,9 @@ sast_semgrep:
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
 
+secret_scan:
+  stage: security
+  image: zricethezav/gitleaks:latest
+  script:
+    - gitleaks detect --source="$CI_PROJECT_DIR" --verbose
+
