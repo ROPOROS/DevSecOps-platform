@@ -7,8 +7,7 @@
     "test": "echo \"tests passed\""
   },
   "dependencies": {
-  "express": "^4.19.2",
-  "lodash": "4.17.20"
+  "express": "^4.19.2"
 }
 
 }
