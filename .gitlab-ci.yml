@@ -37,6 +37,7 @@ secret_scan:
 sca_scan:
   stage: security
   image: aquasec/trivy:latest
+  entrypoint: [""]
   script:
     - trivy fs --scanners vuln --severity CRITICAL,HIGH --exit-code 1 .
   allow_failure: false
