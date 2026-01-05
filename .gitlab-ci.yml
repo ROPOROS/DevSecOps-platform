@@ -18,26 +18,6 @@ unit_tests:
     - cd app
     - npm test
 
-stages:
-  - build
-  - test
-  - security
-
-default:
-  image: node:20-alpine
-
-build_app:
-  stage: build
-  script:
-    - cd app
-    - npm ci
-
-unit_tests:
-  stage: test
-  script:
-    - cd app
-    - npm test
-
 sast_semgrep:
   stage: security
   image: semgrep/semgrep
