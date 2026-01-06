@@ -55,5 +55,6 @@ dockle_scan:
     - curl -L -o dockle https://github.com/goodwithtech/dockle/releases/download/v${VERSION}/dockle_${VERSION}_Linux-64bit
     - chmod +x dockle
   script:
+    - cd app
     - docker build -t devops-enigma:${CI_COMMIT_SHA} .
     - ./dockle --exit-code 1 --severity high devops-enigma:${CI_COMMIT_SHA}
