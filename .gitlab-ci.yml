@@ -71,6 +71,7 @@ dockle_scan:
   variables:
     DOCKER_HOST: tcp://docker:2375/
     DOCKER_DRIVER: overlay2
+    DOCKER_TLS_CERTDIR: ""
   script:
     - dockle --exit-code 1 devops-enigma:${CI_COMMIT_SHA}
 
