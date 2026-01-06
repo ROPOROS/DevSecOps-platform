@@ -57,16 +57,21 @@ container_build:
   image: docker:24
   services:
     - docker:24-dind
-  variables:
-    DOCKER_HOST: tcp://docker:2375/
-    DOCKER_DRIVER: overlay2
   script:
     - cd app
     - docker build -t devops-enigma:${CI_COMMIT_SHA} .
 
 dockle_scan:
   stage: package
-  image: goodwithtech/dockle:latest
+  image:
+    name: goodwithtech/dockle:latest
+    entrypoint: [""]
+  services:
+    - docker:24-dind
+  variables:
+    DOCKER_HOST: tcp://docker:2375/
+    DOCKER_DRIVER: overlay2
   script:
     - dockle --exit-code 1 devops-enigma:${CI_COMMIT_SHA}
+
 
