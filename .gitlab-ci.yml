@@ -66,10 +66,13 @@ image_security:
     - mv dockle /usr/local/bin/dockle
     - chmod +x /usr/local/bin/dockle
 
+  variables:
+    IMAGE_TAG: ${CI_COMMIT_SHORT_SHA}
+
   script:
     - cd app
-    - docker build -t devops-enigma:${CI_COMMIT_SHA} .
-    - dockle --exit-code 1 devops-enigma:${CI_COMMIT_SHA}
+    - docker build -t devops-enigma:${IMAGE_TAG} .
+    - dockle --exit-code 1 devops-enigma:${IMAGE_TAG}
 
 
 
