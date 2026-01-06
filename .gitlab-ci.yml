@@ -2,6 +2,7 @@ stages:
   - build
   - test
   - security
+  - package
 
 default:
   image: node:20-alpine
@@ -43,3 +44,17 @@ sca_scan:
     - trivy fs --scanners vuln --severity CRITICAL,HIGH --exit-code 1 .
   allow_failure: false
 
+container_build:
+  stage: package
+  image: docker:24
+  services:
+    - docker:24-dind
+  script:
+    - cd app
+    - docker build -t devops-enigma:${CI_COMMIT_SHA} .
+  
+dockle_scan:
+  stage: package
+  image: goodwithtech/dockle:latest
+  script:
+    - dockle devops-enigma:${CI_COMMIT_SHA}
