@@ -52,27 +52,24 @@ sca_scan:
     - trivy fs --scanners vuln --severity CRITICAL,HIGH --exit-code 1 .
   allow_failure: false
 
-container_build:
+image_security:
   stage: package
   image: docker:24
   services:
     - docker:24-dind
+
+  before_script:
+    - apk add --no-cache curl tar
+    - VERSION=$(curl -fsSL https://api.github.com/repos/goodwithtech/dockle/releases/latest | grep '"tag_name"' | sed -E 's/.*"v([^"]+)".*/\1/')
+    - curl -fsSL -o dockle.tar.gz https://github.com/goodwithtech/dockle/releases/download/v${VERSION}/dockle_${VERSION}_Linux-64bit.tar.gz
+    - tar -xzf dockle.tar.gz
+    - mv dockle /usr/local/bin/dockle
+    - chmod +x /usr/local/bin/dockle
+
   script:
     - cd app
     - docker build -t devops-enigma:${CI_COMMIT_SHA} .
+    - dockle --exit-code 1 --severity high devops-enigma:${CI_COMMIT_SHA}
 
-dockle_scan:
-  stage: package
-  image:
-    name: goodwithtech/dockle:latest
-    entrypoint: [""]
-  services:
-    - docker:24-dind
-  variables:
-    DOCKER_HOST: tcp://docker:2375/
-    DOCKER_DRIVER: overlay2
-    DOCKER_TLS_CERTDIR: ""
-  script:
-    - dockle --exit-code 1 devops-enigma:${CI_COMMIT_SHA}
 
 
