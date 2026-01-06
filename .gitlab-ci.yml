@@ -72,7 +72,8 @@ image_security:
   script:
     - cd app
     - docker build -t devops-enigma:${IMAGE_TAG} .
-    - docker save devops-enigma:${IMAGE_TAG} | dockle --input - --exit-code 1 --exit-level WARN
+    - docker save devops-enigma:${IMAGE_TAG} -o image.tar
+    - dockle --input image.tar --exit-code 1 --exit-level WARN
 
 
 
