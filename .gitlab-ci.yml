@@ -52,8 +52,9 @@ dockle_scan:
   before_script:
     - apk add --no-cache curl
     - VERSION=$(curl -s https://api.github.com/repos/goodwithtech/dockle/releases/latest | grep '"tag_name"' | sed -E 's/.*"v([^"]+)".*/\1/')
-    - curl -L -o dockle https://github.com/goodwithtech/dockle/releases/download/v${VERSION}/dockle_${VERSION}_Linux-64bit
-    - chmod +x dockle
+    - curl -L -o /usr/local/bin/dockle https://github.com/goodwithtech/dockle/releases/download/v${VERSION}/dockle_${VERSION}_Linux-64bit
+    - chmod +x /usr/local/bin/dockle
+
   script:
     - cd app
     - docker build -t devops-enigma:${CI_COMMIT_SHA} .
