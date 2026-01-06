@@ -68,10 +68,14 @@ image_security:
 
   variables:
     IMAGE_TAG: ${CI_COMMIT_SHORT_SHA}
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_TLS_CERTDIR: ""
+    DOCKER_DRIVER: overlay2
 
   script:
     - cd app
     - docker build -t devops-enigma:${IMAGE_TAG} .
+    - docker images | grep devops-enigma   # sanity check
     - dockle --exit-code 1 devops-enigma:${IMAGE_TAG}
 
 
