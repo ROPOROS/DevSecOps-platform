@@ -66,4 +66,4 @@ dockle_scan:
   script:
     - cd app
     - docker build -t devops-enigma:${CI_COMMIT_SHA} .
-    - ./dockle --exit-code 1 --severity high devops-enigma:${CI_COMMIT_SHA}
+    - dockle --exit-code 1 --severity high devops-enigma:${CI_COMMIT_SHA}
