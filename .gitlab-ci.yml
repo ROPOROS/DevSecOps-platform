@@ -76,7 +76,7 @@ image_security:
     - cd app
     - docker build -t devops-enigma:${IMAGE_TAG} .
     - docker images | grep devops-enigma   # sanity check
-    - dockle --exit-code 1 devops-enigma:${IMAGE_TAG}
+    - dockle --host tcp://docker:2375 --exit-code 1 devops-enigma:${IMAGE_TAG}
 
 
 
