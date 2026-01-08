@@ -1,0 +1,42 @@
+hostNetwork: true
+
+service:
+  enabled: false
+
+api:
+  dashboard: true
+  insecure: false
+
+entryPoints:
+  web:
+    address: ":80"
+  websecure:
+    address: ":443"
+  traefik:
+    address: ":9000"
+
+ports:
+  web:
+    port: 80
+    nodePort: 80
+    expose:
+      default: true
+
+  websecure:
+    port: 443
+    nodePort: 443
+    expose:
+      default: true
+
+  traefik:
+    port: 9000
+    expose:
+      default: false
+
+tls:
+  stores:
+    default:
+      defaultCertificate:
+        certFile: /certs/tls.crt
+        keyFile: /certs/tls.key
+

@@ -1,5 +1,5 @@
 stages:
-  #- lint
+  - lint
   - build
   - test
   - security
@@ -8,12 +8,12 @@ stages:
 default:
   image: node:20-alpine
 
-# hadolint:
-#   image: hadolint/hadolint:latest
-#   stage: lint
-#   script:
-#     - cd app
-#     - hadolint Dockerfile
+hadolint:
+  image: hadolint/hadolint:latest
+  stage: lint
+  script:
+    - cd app
+    - hadolint Dockerfile
 
 build_app:
   stage: build

@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: devops-enigma
+  namespace: devops-enigma
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: devops-enigma
+  template:
+    metadata:
+      labels:
+        app: devops-enigma
+    spec:
+      containers:
+        - name: app
+          image: devops-enigma:secure
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 3000
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 3000
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 3000
+            initialDelaySeconds: 10
+            periodSeconds: 10

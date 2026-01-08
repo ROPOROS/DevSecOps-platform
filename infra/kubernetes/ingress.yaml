@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: devops-enigma
+  namespace: devops-enigma
+spec:
+  tls:
+    - hosts:
+        - devops-enigma.127.0.0.1.nip.io
+      secretName: devops-enigma-tls
+  rules:
+    - host: devops-enigma.127.0.0.1.nip.io
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: devops-enigma
+                port:
+                  number: 80
